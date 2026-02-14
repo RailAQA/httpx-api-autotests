@@ -7,11 +7,11 @@ class CreateUsersRequest(TypedDict):
   """
     Описание структуры запроса на создание пользователя.
     """
-  email = str
-  password = str
-  lastName = str
-  firstName = str
-  middleName = str
+  email: str
+  password: str
+  lastName: str
+  firstName: str
+  middleName: str
 
 class PublicUserClient(APIClinet):
     """
@@ -24,4 +24,4 @@ class PublicUserClient(APIClinet):
         :param request: Словарь с email, password, lastname, firstname, middlename.
         :return: Ответ от сервера в виде объекта httpx.Response
         """
-        APIClinet.post("/api/v1/users", json=request)
+        return self.post("/api/v1/users", json=request)

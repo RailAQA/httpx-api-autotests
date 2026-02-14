@@ -8,10 +8,10 @@ class UpdateUserRequest(TypedDict):
     """
     Описание структуры запроса на обновление пользователя.
     """
-    email = str | None
-    lastName = str | None
-    firstName = str | None
-    middleName = str | None
+    email: str | None
+    lastName: str | None
+    firstName: str | None
+    middleName: str | None
 
 class PrivateUserClient(APIClinet):
     """
@@ -24,7 +24,7 @@ class PrivateUserClient(APIClinet):
 
         :return: Ответ от сервера в виде объекта httpx.Response
         """
-        APIClinet.get("/api/v1/users/me")
+        return self.get("/api/v1/users/me")
 
     def get_user_api(self, user_id: str) -> Response:
         """
@@ -33,7 +33,7 @@ class PrivateUserClient(APIClinet):
         :param user_id: Идентификатор пользователя.
         :return: Ответ от сервера в виде объекта httpx.Response
         """
-        APIClinet.get(f"/api/v1/users/{user_id}")
+        return self.get(f"/api/v1/users/{user_id}")
 
     def update_user_api(self, user_id: str, request: UpdateUserRequest) -> Response:
         """
@@ -43,7 +43,7 @@ class PrivateUserClient(APIClinet):
         :param request: Словарь с email, lastName, firstName, middleName.
         :return: Ответ от сервера в виде объекта httpx.Response
         """
-        APIClinet.patch(url=f"/api/v1/users/{user_id}", json=request)
+        return self.patch(url=f"/api/v1/users/{user_id}", json=request)
 
     def delete_user_api(self, user_id: str) -> Response:
         """
@@ -52,4 +52,4 @@ class PrivateUserClient(APIClinet):
         :param user_id: Идентификатор пользователя.
         :return: Ответ от сервера в виде объекта httpx.Response
         """
-        APIClinet.delete(url=f"/api/v1/users/{user_id}")
+        return self.delete(url=f"/api/v1/users/{user_id}")
