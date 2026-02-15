@@ -3,6 +3,8 @@ from httpx import Response
 from clients.api_client import APIClinet
 from typing import TypedDict
 
+from clients.private_http_client import AuthentificationUserDict, get_private_http_client
+
 
 class GetCoursesQueryDict(TypedDict):
     """
@@ -82,3 +84,6 @@ class CoursesClient(APIClinet):
         :return: Ответ от сервера в виде объекта httpx.Response
         """
         return self.delete(url=f"/api/v1/courses/{course_id}")
+    
+def get_private_courses_client(user: AuthentificationUserDict) -> CoursesClient:
+  return CoursesClient(client=get_private_http_client(user=user))

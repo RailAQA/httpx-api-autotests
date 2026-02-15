@@ -3,6 +3,8 @@ from httpx import Response
 from clients.api_client import APIClinet
 from typing import TypedDict
 
+from clients.private_http_client import AuthentificationUserDict, get_private_http_client
+
 
 class CreateFileRequest(TypedDict):
     """
@@ -43,3 +45,6 @@ class FileClient(APIClinet):
         :return: Ответ от сервера в виде объекта httpx.Response
         """
         return self.post(url="/api/v1/files", data=request, json={"upload_file": open(request["upload_file"], "rb")})
+    
+def get_private_files_client(user: AuthentificationUserDict) -> FileClient:
+    return FileClient(client=get_private_http_client(user=user))

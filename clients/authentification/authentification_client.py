@@ -3,6 +3,13 @@ from clients.api_client import APIClinet
 from httpx import Response
 from typing import TypedDict
 
+from clients.public_http_builder import get_public_http_client
+
+
+class Token(TypedDict):
+    tokenType: str
+    accessToken: str
+    refreshToken: str
 
 class LoginRequestDict(TypedDict):
     """
@@ -10,6 +17,9 @@ class LoginRequestDict(TypedDict):
     """
     email: str
     password: str
+
+class LoginResponseDict(dict):
+    token: Token
 
 class RefreshRequestDict(TypedDict):
     """
@@ -38,3 +48,10 @@ class AuthentificationClient(APIClinet):
         :return: Ответ от сервера в виде объекта httpx.Response
         """
         return self.post("/api/v1/authentication/refresh", json=request)
+    
+    def login(self, request: LoginRequestDict) -> LoginResponseDict:
+        response = self.login_api(request)
+        response.json()
+    
+def get_authentification_client() -> AuthentificationClient:
+    return AuthentificationClient(client=get_public_http_client())
