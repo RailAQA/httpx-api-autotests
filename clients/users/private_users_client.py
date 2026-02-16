@@ -4,6 +4,7 @@ from clients.api_client import APIClinet
 from typing import TypedDict
 
 from clients.private_http_client import get_private_http_client, AuthentificationUserDict
+from clients.users.public_users_cliens import User
 
 
 class UpdateUserRequest(TypedDict):
@@ -14,6 +15,9 @@ class UpdateUserRequest(TypedDict):
     lastName: str | None
     firstName: str | None
     middleName: str | None
+
+class GetUserResponseDict(TypedDict):
+    user: User
 
 class PrivateUserClient(APIClinet):
     """
@@ -55,6 +59,10 @@ class PrivateUserClient(APIClinet):
         :return: Ответ от сервера в виде объекта httpx.Response
         """
         return self.delete(url=f"/api/v1/users/{user_id}")
+    
+    def get_user(self, user_id: str) -> GetUserResponseDict:
+        response = self.get_user_api(user_id=user_id)
+        return response.json()
     
 def get_private_users_client(user: AuthentificationUserDict) -> PrivateUserClient:
     return PrivateUserClient(client=get_private_http_client(user=user))

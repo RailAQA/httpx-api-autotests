@@ -48,10 +48,10 @@ class AuthentificationClient(APIClinet):
         :return: Ответ от сервера в виде объекта httpx.Response
         """
         return self.post("/api/v1/authentication/refresh", json=request)
-    
+        
     def login(self, request: LoginRequestDict) -> LoginResponseDict:
         response = self.login_api(request)
-        response.json()
+        return response.json()
     
 def get_authentification_client() -> AuthentificationClient:
     return AuthentificationClient(client=get_public_http_client())

@@ -11,7 +11,6 @@ class AuthentificationUserDict(TypedDict):
 def get_private_http_client(user: AuthentificationUserDict) -> Client:
     authentification_client = get_authentification_client()
 
-
     login_request = LoginRequestDict(email=user["email"], password=user["password"])
     login_response = authentification_client.login(login_request)
 
