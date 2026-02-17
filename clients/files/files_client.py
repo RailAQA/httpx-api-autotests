@@ -14,6 +14,15 @@ class CreateFileRequest(TypedDict):
     directory: str
     upload_file: str
 
+class File(TypedDict):
+    id : str
+    filename : str
+    directory : str
+    url : str
+
+class CreateFileResponseDict(TypedDict):
+    file: File
+
 class FileClient(APIClinet):
     """
     Клиент для работы с /api/v1/files
@@ -44,7 +53,14 @@ class FileClient(APIClinet):
         :param request: Словарь с filename, directory, upload_file.
         :return: Ответ от сервера в виде объекта httpx.Response
         """
-        return self.post(url="/api/v1/files", data=request, json={"upload_file": open(request["upload_file"], "rb")})
+        return self.post(
+            url="/api/v1/files", 
+            data=request, 
+            files={"upload_file": open(request["upload_file"], "rb")})
+    
+    def create_file(self, request: CreateFileRequest) -> CreateFileResponseDict:
+        response = self.create_file_api(request=request)
+        return response.json()
     
 def get_private_files_client(user: AuthentificationUserDict) -> FileClient:
     return FileClient(client=get_private_http_client(user=user))
