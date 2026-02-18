@@ -15,12 +15,18 @@ class CreateFileRequest(TypedDict):
     upload_file: str
 
 class File(TypedDict):
+    """
+    Описание структуры файла
+    """
     id : str
     filename : str
     directory : str
     url : str
 
 class CreateFileResponseDict(TypedDict):
+    """
+    Описание структуры ответа на создание файла
+    """
     file: File
 
 class FileClient(APIClinet):
@@ -63,4 +69,9 @@ class FileClient(APIClinet):
         return response.json()
     
 def get_private_files_client(user: AuthentificationUserDict) -> FileClient:
+    """
+    Функция создаёт экземпляр FilesClient с уже настроенным HTTP-клиентом.
+
+    :return: Готовый к использованию FilesClient.
+    """
     return FileClient(client=get_private_http_client(user=user))
