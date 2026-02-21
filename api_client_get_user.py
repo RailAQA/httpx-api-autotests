@@ -1,4 +1,4 @@
-from clients.private_http_client import AuthentificationUserDict
+from clients.private_http_client import AuthentificationUserSchema
 from clients.users.private_users_client import get_private_users_client
 from clients.users.public_users_cliens import CreateUsersRequest, get_public_users_client
 from tools.fakers import get_random_email
@@ -17,7 +17,7 @@ create_user_response_response = public_user_client.create_user(request=create_us
 
 print(f"Create user data: {create_user_response_response}")
 
-user = AuthentificationUserDict(
+user = AuthentificationUserSchema(
     email=create_user_request["email"], 
     password=create_user_request["password"]
                                 )

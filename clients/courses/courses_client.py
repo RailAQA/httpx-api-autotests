@@ -4,7 +4,7 @@ from clients.api_client import APIClinet
 from typing import TypedDict
 
 from clients.files.files_client import File
-from clients.private_http_client import AuthentificationUserDict, get_private_http_client
+from clients.private_http_client import AuthentificationUserSchema, get_private_http_client
 from clients.users.public_users_cliens import User
 
 
@@ -104,5 +104,5 @@ class CoursesClient(APIClinet):
        response = self.create_course_api(request=request)
        return response.json()    
     
-def get_private_courses_client(user: AuthentificationUserDict) -> CoursesClient:
+def get_private_courses_client(user: AuthentificationUserSchema) -> CoursesClient:
   return CoursesClient(client=get_private_http_client(user=user))

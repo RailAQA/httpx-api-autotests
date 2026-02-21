@@ -3,7 +3,7 @@ from httpx import Response
 from clients.api_client import APIClinet
 from typing import TypedDict
 
-from clients.private_http_client import get_private_http_client, AuthentificationUserDict
+from clients.private_http_client import AuthentificationUserSchema, get_private_http_client
 from clients.users.public_users_cliens import User
 
 
@@ -64,5 +64,5 @@ class PrivateUserClient(APIClinet):
         response = self.get_user_api(user_id=user_id)
         return response.json()
     
-def get_private_users_client(user: AuthentificationUserDict) -> PrivateUserClient:
+def get_private_users_client(user: AuthentificationUserSchema) -> PrivateUserClient:
     return PrivateUserClient(client=get_private_http_client(user=user))
