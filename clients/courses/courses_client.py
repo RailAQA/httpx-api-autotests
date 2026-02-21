@@ -5,7 +5,7 @@ from typing import TypedDict
 
 from clients.files.files_client import File
 from clients.private_http_client import AuthentificationUserSchema, get_private_http_client
-from clients.users.public_users_cliens import User
+from clients.users.users_schema import UserSchema
 
 
 class GetCoursesQueryDict(TypedDict):
@@ -44,7 +44,7 @@ class Course(TypedDict):
   description: str
   previewFile: File
   estimatedTime: str
-  createdByUser: User
+  createdByUser: UserSchema
 
 class CreateCourseResponseDict(TypedDict):
    course: Course
