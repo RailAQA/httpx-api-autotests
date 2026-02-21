@@ -1,33 +1,9 @@
 from httpx import Response
 
 from clients.api_client import APIClinet
-from typing import TypedDict
-
+from clients.files.files_schema import CreateFileRequestSchema, CreateFileResponseSchema
 from clients.private_http_client import AuthentificationUserSchema, get_private_http_client
 
-
-class CreateFileRequest(TypedDict):
-    """
-    Описание структуры запроса на создание файла.
-    """
-    filename: str
-    directory: str
-    upload_file: str
-
-class File(TypedDict):
-    """
-    Описание структуры файла
-    """
-    id : str
-    filename : str
-    directory : str
-    url : str
-
-class CreateFileResponseDict(TypedDict):
-    """
-    Описание структуры ответа на создание файла
-    """
-    file: File
 
 class FileClient(APIClinet):
     """
@@ -52,7 +28,7 @@ class FileClient(APIClinet):
         """
         return self.delete(url=f"/api/v1/files/{file_id}")
 
-    def create_file_api(self, request: CreateFileRequest) -> Response:
+    def create_file_api(self, request: CreateFileRequestSchema) -> Response:
         """
         Метод создания файла.
 
@@ -61,12 +37,12 @@ class FileClient(APIClinet):
         """
         return self.post(
             url="/api/v1/files", 
-            data=request, 
-            files={"upload_file": open(request["upload_file"], "rb")})
+            data=request.model_dump(by_alias=True, exclude="upload_file"), 
+            files={"upload_file": open(request.upload_file, "rb")})
     
-    def create_file(self, request: CreateFileRequest) -> CreateFileResponseDict:
+    def create_file(self, request: CreateFileRequestSchema) -> CreateFileResponseSchema:
         response = self.create_file_api(request=request)
-        return response.json()
+        return CreateFileResponseSchema.model_validate_json(response.text)
     
 def get_private_files_client(user: AuthentificationUserSchema) -> FileClient:
     """
