@@ -1,4 +1,5 @@
-from clients.courses.courses_client import CreateCourseRequestDict, get_private_courses_client
+from clients.courses.courses_client import get_private_courses_client
+from clients.courses.courses_schema import CreateCourseRequestSchema
 from clients.exercises.exercises_client import CreateExerciseRequestDict, get_private_exercise_client
 from clients.files.files_client import get_private_files_client
 from clients.files.files_schema import CreateFileRequestSchema
@@ -38,7 +39,7 @@ print(f"Create user data: {create_file_response}")
 
 private_user_client = get_private_courses_client(user=authenfication_user)
 
-create_course_request = CreateCourseRequestDict(
+create_course_request = CreateCourseRequestSchema(
     title="string", 
     maxScore=20, 
     minScore=10, 
@@ -55,7 +56,7 @@ private_exercise_client = get_private_exercise_client(user=authenfication_user)
 
 create_exercise_request = CreateExerciseRequestDict(
     title="string", 
-    courseId=create_course_response["course"]["id"], 
+    courseId=create_course_response.course.id, 
     maxScore=20, 
     minScore=2, 
     description="string", 
