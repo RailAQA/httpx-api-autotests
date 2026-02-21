@@ -40,12 +40,12 @@ private_user_client = get_private_courses_client(user=authenfication_user)
 
 create_course_request = CreateCourseRequestSchema(
     title="string", 
-    maxScore=20, 
-    minScore=10, 
+    max_score=20, 
+    min_score=10, 
     description="string", 
-    estimatedTime="30 минут", 
-    previewFileId=create_file_response.file.id, 
-    createdByUserId=create_user_response.user.id
+    estimated_time="30 минут", 
+    preview_file_id=create_file_response.file.id, 
+    created_by_user_id=create_user_response.user.id
     )
 
 response = private_user_client.create_course(request=create_course_request)

@@ -1,6 +1,7 @@
 from clients.courses.courses_client import get_private_courses_client
 from clients.courses.courses_schema import CreateCourseRequestSchema
-from clients.exercises.exercises_client import CreateExerciseRequestDict, get_private_exercise_client
+from clients.exercises.exercises_client import get_private_exercise_client
+from clients.exercises.exercises_schema import CreateExerciseRequestSchema
 from clients.files.files_client import get_private_files_client
 from clients.files.files_schema import CreateFileRequestSchema
 from clients.private_http_client import AuthentificationUserSchema
@@ -54,13 +55,13 @@ print(f"Create course data: {create_course_response}")
 
 private_exercise_client = get_private_exercise_client(user=authenfication_user)
 
-create_exercise_request = CreateExerciseRequestDict(
+create_exercise_request = CreateExerciseRequestSchema(
     title="string", 
-    courseId=create_course_response.course.id, 
-    maxScore=20, 
-    minScore=2, 
+    course_id=create_course_response.course.id, 
+    max_score=20, 
+    min_score=2, 
     description="string", 
-    estimatedTime="20"
+    estimated_time="20"
     )
 
 response = private_exercise_client.create_exercice(request=create_exercise_request)

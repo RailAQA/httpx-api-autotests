@@ -21,7 +21,7 @@ class CreateCourseRequestSchema(BaseModel):
     min_score: int = Field(alias="minScore")
     description: str
     estimated_time: str = Field(alias="estimatedTime")
-    preview_fileId: str = Field(alias="previewFileId")
+    preview_file_id: str = Field(alias="previewFileId")
     created_by_user_id: str = Field(alias="createdByUserId")
 
 class UpdateCourseRequestSchema(BaseModel):
@@ -38,7 +38,7 @@ class UpdateCourseRequestSchema(BaseModel):
 
 class CourseSchema(BaseModel):
     model_config = ConfigDict(populate_by_name=True)
-    
+
     id: str
     title: str
     max_score: int = Field(alias="maxScore")
