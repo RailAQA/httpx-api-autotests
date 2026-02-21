@@ -94,13 +94,13 @@ class Fake:
         """
         return self.faker.random_int(min=start, max=end)
     
-    def max_scrose(self) -> int:
+    def max_score(self) -> int:
         """
         Генерирует случайный максимальный балл в диапазоне от 50 до 100.
 
         :return: Случайный балл.
         """
-        return self.integer(50, 10)
+        return self.integer(50, 100)
     
     def min_score(self) -> int:
         """
