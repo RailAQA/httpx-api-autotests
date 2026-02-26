@@ -1,5 +1,6 @@
-from clients.users.public_users_cliens import PublicUserClient, get_public_users_client
+from clients.users.public_users_cliens import PublicUserClient
 from clients.users.users_schema import CreateUsersRequestSchema, CreateUserResponseSchema
+from tests.conftest import UserFixture
 from tools.assertions.base import assert_status_code
 from tools.assertions.schema import validate_json_schema
 
