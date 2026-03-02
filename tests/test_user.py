@@ -1,16 +1,25 @@
 from clients.users.public_users_cliens import PublicUserClient
 from clients.users.users_schema import CreateUsersRequestSchema, CreateUserResponseSchema
-from tests.conftest import UserFixture
 from tools.assertions.base import assert_status_code
 from tools.assertions.schema import validate_json_schema
+from tools.fakers import fake
 
 from http import HTTPStatus
+import pytest
 
 from tools.assertions.users import assert_create_user_response
 
 
-def test_create_user(public_users_client: PublicUserClient):
-    request = CreateUsersRequestSchema()
+@pytest.mark.parametrize(
+            "email", 
+    [
+            fake.email(domain="mail.ru"), 
+            fake.email(domain="gmail.com"), 
+            fake.email(domain="example.com")
+    ]
+    )
+def test_create_user(email: str, public_users_client: PublicUserClient):
+    request = CreateUsersRequestSchema(email=email)
     response = public_users_client.create_user_api(request=request)
     response_data = CreateUserResponseSchema.model_validate_json(response.text)
 
@@ -18,3 +27,4 @@ def test_create_user(public_users_client: PublicUserClient):
     assert_create_user_response(request=request, response=response_data)
 
     validate_json_schema(instance=response.json(), schema=response_data.model_json_schema())
+
