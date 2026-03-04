@@ -3,15 +3,17 @@ from clients.authentification.authentification_schema import LoginRequestSchema
 
 from httpx import Client
 from pydantic import BaseModel
+from functools import lru_cache
 
 
-class AuthentificationUserSchema(BaseModel):
+class AuthentificationUserSchema(BaseModel, frozen=True):
     """
     Описание структуры запроса на авторизацию юзера
     """
     email: str
     password: str
 
+@lru_cache(maxsize=None)
 def get_private_http_client(user: AuthentificationUserSchema) -> Client:
     """
     Функция создаёт приватный экземпляр httpx.Client с базовыми настройками.
