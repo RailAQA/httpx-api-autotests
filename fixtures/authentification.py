@@ -10,7 +10,7 @@ from clients.users.users_schema import CreateUsersRequestSchema, CreateUserRespo
 class UserFixture(BaseModel):
     request: CreateUsersRequestSchema
     response: CreateUserResponseSchema
-    authentification_user: AuthentificationUserSchema
+    #authentification_user: AuthentificationUserSchema
 
     @property
     def email(self) -> EmailStr:
